@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="member">
+
+	<select id="list" resultType="com.member.domain.TMemberVO">
+		select * from t_member
+	</select>
+
+
+
+
+<!-- test -->
+  <select id="getTime" resultType="string">
+    select sysdate from dual
+  </select>
+  
+</mapper>
