@@ -1,6 +1,8 @@
 package com.member.mapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -9,10 +11,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
+import com.board.domain.BoardVO;
 import com.member.domain.TMemberVO;
 
 import connectionDB.ConnectionOracleUtil;
 import lombok.extern.log4j.Log4j2;
+import teamProject.util.ProjectMemberMapper;
 import util.MapperUtil;
 
 @Log4j2
@@ -22,6 +26,8 @@ public class OracleDAOTest {
 	private ModelMapper modelMappr;
 	private MemberMapper memberMapper;
 	private MemberSqlDivMapper memberSqlDivMapper;
+//	private ProjectMemberMapper projectMemberMapper;	안됨 ㅅㅂ
+	
 	
 	SqlSessionFactory factory;
 	SqlSession session;
@@ -37,6 +43,7 @@ public class OracleDAOTest {
 			session = factory.openSession();
 			memberMapper = session.getMapper(MemberMapper.class);	// java 어노테이션으로 연결한 query문
 			memberSqlDivMapper = session.getMapper(MemberSqlDivMapper.class);
+//			projectMemberMapper = session.getMapper(ProjectMemberMapper.class);
 			
 		} catch (Exception e) {}
 		
@@ -58,11 +65,12 @@ public class OracleDAOTest {
 			//memberMapper = session.getMapper(MemberSqlMapper.class);
 			
 			String getTime = memberMapper.getTime();
+			//String getTime = projectMemberMapper.getTime();
 			
 			log.info("=== getTime(): mybatis: " + getTime);
 			System.out.println("=== getTime(): mybatis: " + getTime);
 			
-		} catch (Exception e) {}
+		} catch (Exception e) {e.printStackTrace();}
 	}
 	
 	
@@ -109,6 +117,12 @@ public class OracleDAOTest {
 		
 	}
 	
+	
+	
+	
+	
+	
+	
 	@Test
 	public void testUpdate() {
 		TMemberVO memberVO = TMemberVO.builder()
@@ -136,7 +150,100 @@ public class OracleDAOTest {
 	}
 	
 	
+	
+	
+	
+	//==================================================== 왜 안되냐고 //
+	
+	
+	@Test
+	public void testMemberList() {
+  		
+		try {
+  			SqlSession session1 = MybatisManager.getInstance().openSession();
+			
+  			List<TMemberVO> vo = session1.selectList("member.list");
+			
+			System.out.println("---xml mapper memberList---");
+			vo.stream().forEach(System.out::println);
+			
+	
+	 } catch (Exception e) {e.printStackTrace();}
+	finally {session.close();}
+  	}
+	
+	
+	
+	@Test
+	public void testSelectOne() {
+		String id = "hong";
+		TMemberVO vo = session.selectOne("member.findMember",id);
+		
+		System.out.println("Memeber SelectOne(): " + vo);
+	}
+	
+	
+	@Test
+	public void testSelectOne2() {
+		String id = "hong";
+		String pwd = "1234";
+		
+		Map<String, Object> map = new HashMap();
+		map.put("id", id);
+		map.put("pwd", pwd);
+		
+		TMemberVO vo = session.selectOne("member.findIdAndPassMember",map);
+		
+		System.out.println("Memeber SelectOne(): " + vo);
+	}
+	
+	
+	
+	@Test
+	public void testNameAndEmailSearch() {
+		
+		Map<String, Object> map = new HashMap();
+		map.put("name", "홍길동");
+		map.put("email", "hong@gmail.com");
+		
+		TMemberVO vo = (TMemberVO) session.selectList("member.list",map);
+		
+		System.out.println("Search: " + vo);
+	}
+	
+	
+	
+	
 
+	
+	//============= board XML SQL 테스트 =============//
+	
+	@Test
+	public void testListBoard() {
+		try {
+  			SqlSession session1 = MybatisManager.getInstance().openSession();
+			System.out.println(session1);
+			
+			
+			Map<String, Integer> pageinMap = new HashMap<>();
+			pageinMap.put("setion", 1);
+			pageinMap.put("pageNum", 1);
+			
+  			List<BoardVO> vo = session1.selectList("member.boardList", pageinMap);
+			
+			System.out.println("---xml mapper boardList---");
+			vo.stream().forEach(System.out::println);
+			
+	
+	 } catch (Exception e) {e.printStackTrace();}
+	finally {session.close();}
+	}
+	
+	
+	
+	
+	
+	
 //	@Test
 //	public void testFindMembersAll() {
 //		List<TMemberVO> vo = memberMapper.findMemberAll();
@@ -148,30 +255,32 @@ public class OracleDAOTest {
 	
 	
 	
+	
 	// 분리된 SQL Mapper 테스트
 	
-	@Test
-	public void testFindMembersAll() {
-		List<TMemberVO> vo = memberSqlDivMapper.selectAll();
-		session.commit();
-			
-		System.out.println("selectAll => " + vo);
-	}
-	
-	
-	
-	
-	
-	@Test
-	public void testfindMembersByName() {
-		List<TMemberVO> vo = memberMapper.findMembersByName("동순");
-		session.commit();
-		
-		log.info("mybatis mapper vo : " + vo);
-		System.out.println("findMembersByName => " + vo);
-		
-		//vo.stream().forEach((System.out::println);
-	}
+//	@Test
+//	public void testFindMembersAll() {
+//		List<TMemberVO> vo = memberMapper.selectAll_sql();
+//		session.commit();
+//			
+//		System.out.println("selectAll => " + vo);
+//	}
+//	
+//	
+//	
+//	
+//	
+//	
+//	@Test
+//	public void testfindMembersByName() {
+//		List<TMemberVO> vo = memberMapper.findMembersByName("동순");
+//		session.commit();
+//		
+//		log.info("mybatis mapper vo : " + vo);
+//		System.out.println("findMembersByName => " + vo);
+//		
+//		//vo.stream().forEach((System.out::println);
+//	}
 	
 	
 	
@@ -298,3 +407,25 @@ public class OracleDAOTest {
 	*/
 	
 }
+
+
+
+
+/*
+
+	주의: test 별 문제없는데 에러 발생시, 테스트 프로그램을 별도 작성하여 테스트
+	
+	MyBatis CRUD
+	
+	List 	select(query_id): sql실행 후 여러 레코드를 List에 반환
+	List 	select(query_id, 조건): sql실행 후 여러 레코드를 List에 반환
+
+	T	 	select(query_id): sql실행 후 한 개의 레코드를 반환
+	T	 	select(query_id, 조건): sql실행 후 한 개의 레코드를 반환
+	
+	int		insert(query_id, objsect obj): sql실행 시 obj객체의 값을 테이블에 추가
+	int		update(query_id, objsect obj): sql실행 시 obj객체의 값을 테이블 필드에 전달 
+	int		delete(query_id, objsect obj): sql실행 시 obj객체의 값을 조건 값으로 사용하여 delete수행 
+
+
+*/

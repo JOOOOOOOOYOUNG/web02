@@ -1,0 +1,59 @@
+package com.member.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.print.DocFlavor.STRING;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.member.service.MemberService;
+
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
+@WebServlet("/tmember/chekId.do")
+public class MemberIdCheckController extends HttpServlet {
+	
+	// 서비스 객체를 생성(dao, modelMapper)
+	private MemberService memberService = MemberService.INSTANCE;
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doHandler(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doHandler(req, resp);
+	}
+	
+	protected void doHandler(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String id = req.getParameter("id");
+		
+		// id중복체크 서비스 요청
+		boolean isCheck = memberService.checkID(id);
+		if (isCheck) {
+			System.out.println("이미 사용중인 아이디입니다.");
+		} else {
+			System.out.println("사용할 수 있는 아이디입니다.");
+		}
+					
+		// 클라이언트에게 응답
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter writer = resp.getWriter();
+		if (isCheck) {
+			writer.print("not_usable");
+		} else {
+			writer.print("usable");
+		}
+		
+		
+	}
+	
+	
+	
+}

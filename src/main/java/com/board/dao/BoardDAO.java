@@ -65,7 +65,7 @@ public class BoardDAO {
 					order siblings by articleNO Desc
 					)
 					)
-					where recNum between (?-1)*100+(?-1)*10+1 and (?)*100+ (?)*10 
+					where recNum between (?-1)*100+(?-1)*10+1 and (?-1)*100+ (?)*10 
 					
 					""";
 			// where recNum between (section-1)*100+(pageNum-1)*10+1 and (section-1)*100+ (pageNum)*10 

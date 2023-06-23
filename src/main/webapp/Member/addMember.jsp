@@ -24,7 +24,7 @@
       </div>
       <hr>
       <div class="w-75 border p-3 m-3 m-auto">
-      <form action="${ctxPath}/member/insertMember.do" method="post" id="updateForm">
+      <form action="${ctxPath}/reg/insert.do" method="post" id="insertForm">
 
       <div class="mb-3">
         <label class="form-label">ID</label>
@@ -48,7 +48,7 @@
       </div>
 
       <div class="mb-3">
-        <input type="submit" id="updateBtn" class="btn btn-outline-info" value="수정하기">
+        <input type="submit" id="insertBtn" class="btn btn-outline-info" value="완료">
         <a href="${ctxPath}/member/listMember.do" class="btn btn-outline-primary">목록</a>
       </div>
 
@@ -62,15 +62,15 @@
 		$(function(){
 			console.log('jQuery ok...');
 			
-			$('#updateBtn').click(function(e){
+			$('#insertBtn').click(function(e){
 				e.preventDefault();	//submit() 기능 중지
 				
 				
-				var isUpdate = confirm('수정하시겠습니까?')
-				console.log("isUpdate = " + isUpdate);
+				var isUpdate = confirm('등록하시겠습니까?')
+				console.log("isInsert = " + isInsert);
 				
 				if (isUpdate){
-					$('#updateForm').submit();
+					$('#insertForm').submit();
 				}
 				
 				

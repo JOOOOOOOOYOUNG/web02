@@ -21,7 +21,7 @@ import com.board.service.MemberService;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-@WebFilter(urlPatterns = {"/boardlist/*"})
+//@WebFilter(urlPatterns = {"/tmember/update.do","/tmember/delete.do"})
 public class LoginCheckFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

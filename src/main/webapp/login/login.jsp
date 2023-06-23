@@ -52,7 +52,7 @@
                 <div class="row m-2">
                 	<div class="col-md-6">
 	                    <div class="mb-3 form-check">
-	                        <input type="checkbox" class="form-check-input" name="auto" id="auto" value="off">
+	                        <input type="checkbox" class="form-check-input" name="auto" id="auto">
 	                        <label class="form-check-label">자동 로그인</label>
 	                    </div>
                     </div>
@@ -113,6 +113,7 @@
 				dataType: "text",	// 서버로부터 받은 데이터의 타입
 				data: {logindata: _jsonData},
 				success: function(data, textStatus){
+					
 					// json구조 문자열을 json객체로 전환
 					var jsonMessage = JSON.parse(data)
 					

@@ -17,4 +17,36 @@
     select sysdate from dual
   </select>
   
+  
+  <select id="findMember" resultType="com.member.domain.TMemberVO">
+  	select * from t_member where id = #{id}
+  </select>
+  
+  
+  
+  <select id="findIdAndPassMember" resultType="com.member.domain.TMemberVO">
+  	select * from t_member where id = #{id} and pwd = #{pwd}
+  </select>
+  
+  
+  
+  
+  <select id="list2" resultType="com.member.domain.TMemberVO">
+	select * from t_member
+		<where>
+		  <if test="name != '' and name != null">
+		   name = #{name}
+		  </if>
+		  <if test="email != '' and email != null">
+		   and
+		   email = #{email}
+		  </if>
+		</where>
+	</select>
+  
+  
+  
 </mapper>
+
+
+	

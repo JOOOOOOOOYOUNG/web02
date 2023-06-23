@@ -45,7 +45,7 @@
               	  <tr>
                     <th scope="row">${loop.index+1}</th>
                     <td>
-                    <a href="${ctxPath}/member/viewMember.do?id=${mem.id}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">${mem.id}</a>
+                    <a href="${ctxPath}/tmember/viewMember.do?id=${mem.id}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">${mem.id}</a>
                		</td>
                     <td>${mem.pwd}</td>
                     <td>${mem.name}</td>
@@ -62,7 +62,7 @@
                 
               </table>
               
-              <a href="${ctxPath}/member/memberForm.do" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">회원가입하기</a>
+              <a href="${ctxPath}/tmember/insert.do" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">회원가입하기</a>
         </div>
     </div>
   

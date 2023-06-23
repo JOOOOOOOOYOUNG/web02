@@ -23,7 +23,9 @@ import org.apache.commons.io.FileUtils;
 import com.board.dto.BoardDTO;
 import com.board.service.BoardService;
 
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @WebServlet("/boardlist/*")
 public class BoardController extends HttpServlet {
 	
@@ -77,14 +79,8 @@ public class BoardController extends HttpServlet {
 			
 				
 				
-			Map<String, Object> articlesMap = boardService.boardList(pageingMap);
-			articlesMap.put("section", section);
-			articlesMap.put("pageNum", pageNum);
-			
-			
-//			req.setAttribute("articlesMap", articlesMap);
-			
-			
+			List<BoardDTO> boardList = boardService.boardList(pageingMap);		
+				
 			// 게시글 총 개수
 			int totArticles = boardService.selectTotArticles();
 			
@@ -95,7 +91,7 @@ public class BoardController extends HttpServlet {
 			
 			// 전체 페이지수 = 전체레코드수/10(1page: 10개묶음) + 1
 			int totalPage = (int)Math.ceil(totArticles*1.0/10); // 소수점이하기 있으면 자리올림(10.1=>11)
-			int totalPageBlock = (int)Math.ceil(totalPage*1.0/10);
+			int totalPageBlock =(int)Math.ceil(totalPage*1.0/10);
 			
 			
 			System.out.println("totArticles: " + totArticles);
@@ -118,7 +114,6 @@ public class BoardController extends HttpServlet {
 					
 				}
 				
-				
 				if (endPage <= totalPage) {
 					lastPage = i;
 				}
@@ -129,7 +124,8 @@ public class BoardController extends HttpServlet {
 			System.out.println("lastPage: " + lastPage);
 			
 			
-			req.setAttribute("articlesMap", articlesMap);
+			req.setAttribute("list", boardList);
+			
 			req.setAttribute("totArticles", totArticles);
 			req.setAttribute("section", section);
 			req.setAttribute("pageNum", pageNum);
@@ -137,8 +133,7 @@ public class BoardController extends HttpServlet {
 			// 페이지 블럭에서 마지막페이지 값 보관
 			req.setAttribute("lastPage", lastPage);
 			
-			
-			
+		
 			
 			nextPage ="/board/listBoard.jsp";
 			req.getRequestDispatcher(nextPage).forward(req, resp);	
@@ -507,19 +502,25 @@ public class BoardController extends HttpServlet {
 			} else {
 				
 				
-				try {
-					Map<String, Object> articlesMap = boardService.boardList(pageingMap);
-					articlesMap.put("section", section);
-					articlesMap.put("pageNum", pageNum);
-					
-					req.setAttribute("articlesMap", articlesMap);
-					
-				} catch (Exception e) {
-					
-				}
 				
-				nextPage = "/board/listBoard.jsp";
-				req.getRequestDispatcher(nextPage).forward(req, resp);
+			 
+			 List<BoardDTO> boardList = boardService.boardList(pageingMap); // 게시글 총 개수
+			 int totArticles = boardService.selectTotArticles();
+				  
+				  
+			 req.setAttribute("list", boardList); req.setAttribute("totArticles",
+			 totArticles); req.setAttribute("section", section);
+			 req.setAttribute("pageNum", pageNum);
+				 
+			 nextPage ="/board/listBoard.jsp";
+			 req.getRequestDispatcher(nextPage).forward(req, resp);
+		
+				
+				
+			nextPage = "/";
+			resp.sendRedirect(req.getContextPath()+nextPage);
+			
+			
 			}
 				
 			

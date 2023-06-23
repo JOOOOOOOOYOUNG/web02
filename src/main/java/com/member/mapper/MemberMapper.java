@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -17,6 +18,48 @@ import com.member.domain.TMemberVO;
 public interface MemberMapper {
 	
 //	@Select("select now()")  => mariaDB sql��
+	
+	
+	
+	//============ TeamProject ============ 파라미터 두개 이상은 @param 쓰기 //
+	
+	
+	
+	// 로그인
+	@Select("select * from t_member where id = #{id} and pwd = #{pwd}")
+	public TMemberVO login(@Param("id") String id, @Param("pwd") String pwd);
+	
+	
+	
+	// 자동로그인 체크했을 경우
+	@Update("UPDATE t_member set uuid = #{uuid} where id = #{id}")
+	public TMemberVO updateUUID(@Param("uuid") String uuid, @Param("id") String id);
+	
+	
+	
+	// 쿠키값으로 db정보 추출하는 메서드
+	@Select("SELECT * FROM t_member where uuid = #{uuid}")
+	public TMemberVO selectUUID(@Param("uuid") String uuid);
+	
+	
+	
+	//============ TeamProject ============ //
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@Select("select sysdate from dual")
 	public String getTime();
@@ -53,10 +96,31 @@ public interface MemberMapper {
 
 	// 중복ID체크
 	String checkID = """
-			select decode (count(*),1,'true','false') as isCheck from t_member where id = ?
+			select decode (count(*),1,'true','false') as isCheck from t_member where id = #{id}
 			""";
 	@Select(checkID)
 	public String checkID(@Param("id") String id);
+	
+	
+	
+	
+
+	
+	// 동적쿼리 추가
+//	@Select(MemberSQL.LIST_MEMBERS)
+//	public List<TMemberVO> selectAll_sql();
+	
+	
+	
+	
+	// java객체의 속성과 매개변수#{}부분의 필드명이 일치해야 값이 전달됨
+//	@InsertProvider(type=MemberSqlDivMapper.class, method="insertMember")
+//	@Options(useGeneratedKeys = true, keyProperty = "id")
+//	public int addMember_sql(TMemberVO vo);
+//	
+
+
+	
 	
 	
 	
@@ -66,8 +130,8 @@ public interface MemberMapper {
 //	public List<TMemberVO> findMemberAll();
 	
 	
-	@SelectProvider(type=MemberSQL.class, method="findMembersName")
-	public List<TMemberVO> findMembersByName(@Param("name") String name);
+//	@SelectProvider(type=MemberSQL.class, method="findMembersName")
+//	public List<TMemberVO> findMembersByName(@Param("name") String name);
 	
 	
 //	@SelectProvider(type=MemberSQL.class, method="findMembersName")

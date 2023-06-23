@@ -14,7 +14,7 @@ import com.member.service.MemberService;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-@WebServlet("/reg/update.do")
+@WebServlet("/tmember/update.do")
 public class MemberUpdateController extends HttpServlet {
 	
 		// 서비스 객체를 생성(dao, modelMapper)

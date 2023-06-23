@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-<c:set var="ctxPath" value="${pageContext.request.contextPath}" />
+<%@page import="com.board.dto.BoardDTO"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.List"%>
 <c:set var="ctxPath" value="<%=request.getContextPath() %>" />
-<c:set var="list" value="${articlesMap.dtoList}" />
-<c:set var="totArticles" value="${articlesMap.totArticles}" />
-<c:set var="section" value="${articlesMap.section}" />
-<c:set var="pageNum" value="${articlesMap.pageNum}" />
 <c:set var="loginCheck" value="<%=session.getAttribute(\"loginInfo\") %>" />
 
 <!DOCTYPE html>
@@ -68,7 +66,7 @@
 		                      <tr>
 		                        <th scope="row">${articleNum.count}/${article.articleNO} </th>
 		                        <td>
-		                        	<a href="${ctxPath}/boardlist/viewArticle.do?articleNO=${article.articleNO}"  
+		                        	<a href="${ctxPath}/boardlist/viewArticle.do?articleNO=${article.articleNO}&pageNum=${pageNum}&pageBlock=${section}"  
 		                        	   class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
 		                        	   ${article.id}</a>
 		                        </td>
@@ -107,7 +105,7 @@
                 <nav aria-label="...">
                 
                     <ul class="pagination">
-                       	<c:forEach var="page" begin="1" end="${lastPage}" step="1" >
+                       	<c:forEach var="page" begin="1" end="10" step="1" >
 		                     <!--  section 2이상이고 1page이면 이전 버튼 활성화 -->	
 	                       	 <c:if test="${section > 1 && page==1 }">
 		                      	<li class="page-item ">

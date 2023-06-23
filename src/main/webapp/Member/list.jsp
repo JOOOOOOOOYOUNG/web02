@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="ctxpath" value="${pageContext.request.contextPath}" />   
+<c:set var="ctxPath" value="${pageContext.request.contextPath}" />   
 
 <!DOCTYPE html>
 <html>
@@ -45,7 +45,7 @@
 		                <tr>
 		                	<th scope="row">${loop.index+1}</th>
 			                <td>
-			                <a href="${ctxpath}/reg/view.do?id=${mem.id}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">${mem.id}</a>
+			                <a href="${ctxPath}/tmember/view.do?id=${mem.id}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">${mem.id}</a>
 			                </td>
 			                <td>${mem.pwd}</td>
 			                <td>${mem.name}</td>
@@ -56,7 +56,7 @@
             	</c:when>
             </c:choose>
             </table>
-            <p><a href="${ctxpath}/member/memberForm.do" class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">회원가입하기</a></p>
+            <p><a href="${ctxPath}/tmember/insert.do" class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">회원가입하기</a></p>
         </div>
     </div>
 </body>

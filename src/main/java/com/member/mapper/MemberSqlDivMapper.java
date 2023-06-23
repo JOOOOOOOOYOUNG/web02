@@ -25,8 +25,14 @@ public interface MemberSqlDivMapper {
 	
 //	@Select("select now()")  => mariaDB sql��
 	
+	
+	
+	
 	@Select("select sysdate from dual")
 	public String getTime();
+	
+	
+	
 	
 	
 //	@Select("select * from t_member")
@@ -34,10 +40,10 @@ public interface MemberSqlDivMapper {
 	
 	
 	// java객체의 속성과 매개변수#{}부분의 필드명이 일치해야 값이 전달됨
-	@InsertProvider(type=MemberSqlDivMapper.class, method="insertMember")
-	@Options(useGeneratedKeys = true, keyProperty = "id")
-	public int addMember(TMemberVO vo);
-	
+//	@InsertProvider(type=MemberSqlDivMapper.class, method="insertMember")
+//	@Options(useGeneratedKeys = true, keyProperty = "id")
+//	public int addMember(TMemberVO vo);
+//	
 	
 	
 	// java객체의 속성과 매개변수#{}부분의 필드명이 일치해야 값이 전달됨
@@ -72,6 +78,8 @@ public interface MemberSqlDivMapper {
 			""";
 	@Select(checkID)
 	public String checkID(@Param("id") String id);
+	
+	
 	
 	
 	

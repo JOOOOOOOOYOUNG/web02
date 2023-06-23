@@ -14,7 +14,7 @@ import com.member.service.MemberService;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-@WebServlet("/reg/view.do")
+@WebServlet("/tmember/view.do")
 public class MemberViewController extends HttpServlet {
 	
 	// 서비스 객체를 생성(dao, modelMapper)
@@ -39,6 +39,7 @@ public class MemberViewController extends HttpServlet {
 			
 			nextPage = "/Member/viewMember.jsp";
 			req.getRequestDispatcher(nextPage).forward(req, resp);
+			
 		}
 		
 }

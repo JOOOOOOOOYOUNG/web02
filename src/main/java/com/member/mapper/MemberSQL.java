@@ -5,13 +5,15 @@ import org.apache.tomcat.util.buf.StringUtils;
 
 public class MemberSQL {
 	
-	// 회원 목록
+	// 1. 회원 목록
 	public static final String LIST_MEMBERS = 
 			"""
 			select * from t_member
 			""";
 	
-	// 회원 등록
+	
+	
+	// 2. 회원 등록
 	public String insertMember() {
 	  String sql = new SQL()
 	    .INSERT_INTO("t_member")
@@ -20,6 +22,17 @@ public class MemberSQL {
 	    .toString();
 	  return sql;
 	}
+	
+	
+	
+	
+	// 2-1
+//	public static final String INSERT_MEMBER =
+//			"""
+//			insert into t_member (id, pwd, name, email) valuse ( #{id}, #{pwd}, #{name}, #{email} )
+//			""";
+//	
+	
 	
 	
 	

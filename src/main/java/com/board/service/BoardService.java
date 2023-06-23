@@ -1,6 +1,5 @@
 package com.board.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,33 +19,23 @@ public enum BoardService {
 	private ModelMapper modelMapper;
 	
 	
-	BoardService() {
+	private BoardService() {
 		boardDAO = new BoardDAO();
 		modelMapper = MapperUtil.INSTANCE.get();
 	}
 	
 	// 게시글 목록 서비스
-	public Map<String, Object> boardList(Map<String, Integer> pageingMap) {
-		
+	public List<BoardDTO> boardList(Map<String, Integer> pageingMap) {
 		
 		// 게시글 목록
 		List<BoardVO> boardList = boardDAO.listBoard(pageingMap);
-		
-		// 게시글 총 개수
-		int totArticles = boardDAO.selectTotArticles();
 		
 		// vo -> dto
 		List<BoardDTO> dtoList = boardList.stream()
 							.map(vo -> modelMapper.map(vo, BoardDTO.class))
 							.collect(Collectors.toList());
 		
-		// 반환시 여러개의 값을 저장할 경우 Collection구조 타입으로 사용
-		Map<String, Object> articleMap = new HashMap<>();
-		articleMap.put("dtoList", dtoList);
-		articleMap.put("totArticles", totArticles);
-		
-		
-		return articleMap;
+		return dtoList;
 	}
 	
 	// 등록된 게시글 전체 개수

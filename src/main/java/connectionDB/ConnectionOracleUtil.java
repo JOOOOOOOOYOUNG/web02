@@ -16,6 +16,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import lombok.extern.log4j.Log4j2;
+import teamProject.util.ProjectMemberMapper;
 
 @Log4j2
 public enum ConnectionOracleUtil {
@@ -56,7 +57,7 @@ public enum ConnectionOracleUtil {
 		
 		// xml sql
 		configuration.addMapper(MemberMapper.class);	// MemberMapper.class
-		configuration.addMapper(MemberMapper.class);
+		//configuration.addMapper(ProjectMemberMapper.class);
 		
 		log.info("SqlSessionFactory: " + new SqlSessionFactoryBuilder().build(configuration));
 		
